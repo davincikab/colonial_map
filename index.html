@@ -49,10 +49,10 @@
         container: 'map', // container ID
         style: 'mapbox://styles/zeyelaura/ckmws2w3i057m17n2gt5zcqew', // style URL
         center: [4.452, 50.707], // starting position [lng, lat]
-        zoom: 9 // starting zoom
+        zoom: 7 // starting zoom
     });
 
-    let groupOne = ['missionaries-and-officers-f-7daqb8', 'monuments-feuille-1-34jl9h','cultural-appropriation-feui-d9vcyu'];
+    let groupOne = ['missionaries-and-officers-f-7daqb8', 'monuments-feuille-1-34jl9h','cultural-appropriation-feui-d9vcyu', 'industries-2sryws'];
     let groupTwo = ['mappingcolonialbelgium-bw0yoj (2)', 'mappingcolonialbelgium-bw0yoj copy', 'mappingcolonialbelgium-bw0yoj', 'mappingcolonialbelgium-bw0yoj (1)'];
 
     const popup = new mapboxgl.Popup().setMaxWidth("350px");
@@ -60,13 +60,7 @@
     map.on('load', function(e) {
         map.on('click', function(e) {
             let features = map.queryRenderedFeatures(e.point, {
-                layers:[...groupTwo, ...groupOne
-                    // 'mappingcolonialbelgium-bw0yoj', 'mappingcolonialbelgium-bw0yoj (1)',
-                    // 'mappingcolonialbelgium-bw0yoj (2)', 'mappingcolonialbelgium-bw0yoj copy',
-
-                    // 'missionaries-and-officers-f-7daqb8', 'monuments-feuille-1-34jl9h',
-                    // 'cultural-appropriation-feui-d9vcyu'
-                ]
+                layers:[...groupTwo, ...groupOne]                
             });
 
             if(features[0]) {
@@ -100,11 +94,11 @@
     function getPopupContent(feature, layerId) {
         if(groupOne.indexOf(layerId) != -1) {
             return `<div class="popup-content">
-                <div class="popup-header">${feature.properties.Name}</div>
+                <div class="popup-header">${feature.properties.name}</div>
                 <div class="popup-body">
                     <div>
-                        <b>Address</b>
-                        <div>${feature.properties.Address}</div></div>
+                        <b>Description</b>
+                        <div>${feature.properties.description}</div></div>
                     <div></div>
                 </div>
             </div>`;
@@ -116,7 +110,7 @@
                 <div class="popup-body">
                     <div>
                         <b>Description</b>
-                        <div>${feature.properties.description}</div>
+                        <div>${feature.properties.description || ""}</div>
                     </div>
                 </div>
             </div>`;
@@ -124,6 +118,7 @@
     }
 
 
+    // legend control
 </script>
 
 </body>
