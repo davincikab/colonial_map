@@ -12,6 +12,7 @@
 
     .popup-content {
         width: 300px;
+        color: #2e2e2e;
     }
 
     .mapboxgl-popup-close-button {
@@ -37,7 +38,8 @@
         font-weight: 700;
         font-size: 1.2rem;
         padding:0.375rem 0.25rem;
-        box-shadow: 0px 2px 0.3em #ddd;
+        border-bottom: 1.5px solid #999;
+        box-shadow: 0 4px 2px -2px #999;
     }
 </style>
 </head>
@@ -49,7 +51,8 @@
         container: 'map', // container ID
         style: 'mapbox://styles/zeyelaura/ckmws2w3i057m17n2gt5zcqew', // style URL
         center: [4.452, 50.707], // starting position [lng, lat]
-        zoom: 7 // starting zoom
+        zoom: 7, // starting 
+        bearing:154.4
     });
 
     let groupOne = ['missionaries-and-officers-f-7daqb8', 'monuments-feuille-1-34jl9h','cultural-appropriation-feui-d9vcyu', 'industries-2sryws'];
