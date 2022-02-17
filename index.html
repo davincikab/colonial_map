@@ -8,7 +8,12 @@
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
 <style>
     body { margin: 0; padding: 0; }
-    #map {width:100%; height: 80vh; }
+    #map-wrapper {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    #map {width:90vw; height: 80vh; }
 
     .popup-content {
         width: 340px;
@@ -17,7 +22,8 @@
 
     .mapboxgl-popup-close-button {
         font-size: 1.5rem;
-        color:white
+        color:white;
+        padding: 0.2rem;
     }
 
 
@@ -83,7 +89,7 @@
     }
 
     .btn-group {
-        flex: 0.4;
+        flex: 0.6;
         display: flex;
         justify-content: space-around;
     }
@@ -100,6 +106,32 @@
 
     .btn:hover {
         background-color: #ff8080;
+    }
+
+    @media screen and (max-width:480px) {
+        .legend-section {
+            height: 30vh;
+            justify-content: space-between;
+            padding: 0.25rem;
+        }
+
+        .legend-div {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            padding: 0.25rem;
+            width: 60%;
+        }
+
+        .btn-group {
+            flex-direction: column;
+            align-items: normal;
+            align-content: space-evenly;
+            width: 35%;
+        }
+
+        .btn-group .btn {
+            margin: 1rem 0.2rem;
+        }
     }
 </style>
 </head>
@@ -191,8 +223,8 @@
     });
 
     function getPopupContent(feature, layerId) {
-        console.log(feature.properties.description);
-        let text = extractImages(feature.properties.description);
+        let text = feature.properties.description;
+        text = text ? extractImages(feature.properties.description) : "";
 
         
 
@@ -222,19 +254,16 @@
     }
 
     function extractImages(text) {
-        let mLinks = text.match(/{{.\S*}}/g);
+        let mLinks = text.match(/{{.\S*}}/g) || [];
         console.log(mLinks);
 
         mLinks.forEach(link => {
-            
-
             let imgLink = link.replace(/{{|}}/g, "").split("?")[0]
             let imgSrc = createImg(imgLink);
             text = text.replace(link, imgSrc);
         });
 
         return text;
-
     }
 
     function createImg(src) {

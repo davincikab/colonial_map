@@ -1,9 +1,45 @@
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
 <style>
-#map{width:100%;height:70vh}.popup-content{width:300px;color:#2e2e2e}.mapboxgl-popup-close-button{font-size:1.5rem}.mapboxgl-popup-content{padding:0!important}.popup-content .popup-body{max-height:200px;overflow-y:auto;overflow-x:hidden;padding:.375rem .5rem}.popup-content b{font-size:1rem}.popup-header{font-weight:700;font-size:1.2rem;padding:.375rem .25rem;border-bottom:1.5px solid #999;box-shadow:0 4px 2px -2px #999}
+#map-wrapper{width:100vw;height:100vh}#map{width:95vw;height:80vh}.popup-content{width:340px;color:#fff}.mapboxgl-popup-close-button{font-size:1.5rem;color:#fff;padding:.2rem}.mapboxgl-popup-content{padding:0!important;background-color:#2e2e2e;color:#fff;box-shadow:0 1px 2px rgb(255 255 255 / 31%)!important}.mapboxgl-popup-tip{background-color:#2e2e2e}.popup-content .popup-body{max-height:250px;overflow-y:auto;overflow-x:hidden;padding:.375rem .5rem}.popup-content b{font-size:1rem}.popup-header{font-weight:700;font-size:1.2rem;padding:.375rem .25rem;border-bottom:1.5px solid #999}.popup-body div>img{width:300px}.legend-section{display:flex;align-items:center;height:20vh}.legend-div{flex:1.6;display:flex;align-items:center}.legend-item{display:flex;flex-direction:column;align-items:center;margin:0 .2rem;width:130px}.legend-item div{text-align:center}.legend-item img{width:40px;height:40px}.btn-group{flex:0.6;display:flex;justify-content:space-around}.btn{line-height:1.5;padding:.5rem .75rem;color:#fff;background-color:#ffbfbf;border:0 solid #ddd;border-radius:3px;cursor:pointer}.btn:hover{background-color:#ff8080}@media screen and (max-width:480px){.legend-section{height:30vh;justify-content:space-between;padding:.25rem}.legend-div{display:grid;grid-template-columns:120px 1fr;padding:.25rem;width:60%}.btn-group{flex-direction:column;align-items:normal;align-content:space-evenly;width:35%}.btn-group .btn{margin:1rem .2rem}}
 </style>
-<div id="map"></div>
+<div class="map-wrapper">
+        <div id="map"></div>
+        <div class="legend-section">
+            <div class="legend-div">
+                <div class="legend-item">
+                    <img src="https://davincikab.github.io/colonial_map/factory.svg" alt="">
+                    <div>Industries</div>
+                </div>
+                <div class="legend-item">
+                    <img src="https://davincikab.github.io/colonial_map/lepold II.svg" alt="">
+                    <div>Monuments</div>
+                </div>
+                <div class="legend-item">
+                    <img src="https://davincikab.github.io/colonial_map/handjes icon 2.svg" alt="">
+                    <div>Missionaries and Officers</div>
+                </div>
+                <div class="legend-item">
+                    <img src="https://davincikab.github.io/colonial_map/masque masque masque.svg" alt="">
+                    <div>Cultural Appropriation</div>
+                </div>
+                <div class="legend-item">
+                    <img src="https://davincikab.github.io/colonial_map/Piece 1 franc congo.svg" alt="">
+                    <div>Black Money</div>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-info">
+                    PAGE INFO
+                </button>
+
+                <button class="btn btn-info">
+                    ADD INFO
+                </button>
+            </div>
+        </div>
+    </div>
 <script>
-mapboxgl.accessToken="pk.eyJ1IjoiemV5ZWxhdXJhIiwiYSI6ImNrbXdyeTM3eDBoeXMycG4xenFuYnMydXYifQ.yccRXLccnXeepE4doK24-A";const map=new mapboxgl.Map({container:"map",style:"mapbox://styles/zeyelaura/ckmws2w3i057m17n2gt5zcqew",center:[4.452,50.707],zoom:7,bearing:154.4});let groupOne=["missionaries-and-officers-f-7daqb8","monuments-feuille-1-34jl9h","cultural-appropriation-feui-d9vcyu","industries-2sryws"],groupTwo=["mappingcolonialbelgium-bw0yoj (2)","mappingcolonialbelgium-bw0yoj copy","mappingcolonialbelgium-bw0yoj","mappingcolonialbelgium-bw0yoj (1)"];const popup=(new mapboxgl.Popup).setMaxWidth("350px");function getPopupContent(o,e){return-1!=groupOne.indexOf(e)?`<div class="popup-content">\n                <div class="popup-header">${o.properties.name}</div>\n                <div class="popup-body">\n                    <div>\n                        <b>Description</b>\n                        <div>${o.properties.description}</div></div>\n                    <div></div>\n                </div>\n            </div>`:-1!=groupTwo.indexOf(e)?`<div class="popup-content">\n                <div class="popup-header">${o.properties.name}</div>\n                <div class="popup-body">\n                    <div>\n                        <b>Description</b>\n                        <div>${o.properties.description||""}</div>\n                    </div>\n                </div>\n            </div>`:void 0}map.on("load",function(o){map.on("click",function(o){let e=map.queryRenderedFeatures(o.point,{layers:[...groupTwo,...groupOne]});if(e[0]){let n=e[0],p=getPopupContent(n,n.layer.id);popup.setLngLat(o.lngLat).setHTML(p).addTo(map)}console.log(e)}),[...groupOne,...groupTwo].forEach(o=>{map.on("mouseover",o,function(o){map.getCanvas().style.cursor="pointer"}),map.on("mouseleave",o,function(o){map.getCanvas().style.cursor=""})})});
+mapboxgl.accessToken="pk.eyJ1IjoiemV5ZWxhdXJhIiwiYSI6ImNrbXdyeTM3eDBoeXMycG4xenFuYnMydXYifQ.yccRXLccnXeepE4doK24-A";const map=new mapboxgl.Map({container:"map",style:"mapbox://styles/zeyelaura/ckmws2w3i057m17n2gt5zcqew",center:[4.452,50.707],zoom:7,bearing:154.4});let groupOne=["missionaries-and-officers-f-7daqb8","monuments-feuille-1-34jl9h","cultural-appropriation-feui-d9vcyu","industries-2sryws"],groupTwo=["mappingcolonialbelgium-bw0yoj (2)","mappingcolonialbelgium-bw0yoj copy","mappingcolonialbelgium-bw0yoj","mappingcolonialbelgium-bw0yoj (1)"];const popup=(new mapboxgl.Popup).setMaxWidth("350px");function getPopupContent(e,o){let n=e.properties.description;return n=n?extractImages(e.properties.description):"",-1!=groupOne.indexOf(o)?`<div class="popup-content">\n                <div class="popup-header">${e.properties.name}</div>\n                <div class="popup-body">\n                    <div>\n                        <b>Description</b>\n                        <div>${n}</div></div>\n                    <div></div>\n                </div>\n            </div>`:-1!=groupTwo.indexOf(o)?`<div class="popup-content">\n                <div class="popup-header">${e.properties.name}</div>\n                <div class="popup-body">\n                    <div>\n                        <b>Description</b>\n                        <div>${n||""}</div>\n                    </div>\n                </div>\n            </div>`:void 0}function extractImages(e){let o=e.match(/{{.\S*}}/g)||[];return console.log(o),o.forEach(o=>{let n=createImg(o.replace(/{{|}}/g,"").split("?")[0]);e=e.replace(o,n)}),e}function createImg(e){return`<img src="${e}" alt="">`}map.on("load",function(e){map.on("click",function(e){let o=map.queryRenderedFeatures(e.point,{layers:[...groupTwo,...groupOne]});if(o[0]){let n=o[0],p=getPopupContent(n,n.layer.id);popup.setLngLat(e.lngLat).setHTML(p).addTo(map)}console.log(o)}),[...groupOne,...groupTwo].forEach(e=>{map.on("mouseover",e,function(e){map.getCanvas().style.cursor="pointer"}),map.on("mouseleave",e,function(e){map.getCanvas().style.cursor=""})})});
 </script>
